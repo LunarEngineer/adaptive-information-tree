@@ -26,7 +26,7 @@ setup(
     url=about['__url__'],
     packages=['py_pkg'],
     include_package_data=True,
-    python_requires=">=3.7.*",
+    python_requires=">=3.9.*",
     install_requires=['numpy', 'requests'],
     license=about['__license__'],
     zip_safe=False,
@@ -36,7 +36,7 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.9',
     ],
     keywords='package development template'
 )
