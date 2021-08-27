@@ -13,3 +13,5 @@ We use *feedback from subordinate learners* to back-propagate *error* and *rewar
 This ideally results in nearest neighbor queries which are more likely to produce optimal results for queries over a potentially highly dimensional and nonlinear space by mapping the embeddings into a much lower dimensionality orthogonal space.
 
 This embedding space, by virtue of gradient descent, will drift towards a space that is optimal for *cumulative long term reward*.
+
+This package was cloned from a [quite awesome template](https://github.com/AlexIoannides/py-package-template); cheers, I owe you a beer or two!

@@ -21,9 +21,9 @@ from py_pkg.__version__ import __version__
 
 # -- Project information -----------------------------------------------------
 
-project = 'Python Package Template Project'
-copyright = '2018, Alex Ioannides'
-author = 'Alex Ioannides'
+project = 'Adaptive KD Trees'
+copyright = '2021, Timothy Luna'
+author = 'Timothy Luna'
 
 # The short X.Y version
 version = __version__[:-2]
@@ -135,8 +135,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'pypkg.tex', 'pypkg Documentation',
-     'Alex Ioannides', 'manual'),
+    # (master_doc, 'pypkg.tex', 'pypkg Documentation',
+    #  'Timothy Luna', 'manual'),
 ]
 
 
@@ -145,7 +145,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pypkg', 'pypkg Documentation',
+    (master_doc, 'adaptive_kd_tree', 'adaptive_kd_tree Documentation',
      [author], 1)
 ]
 
