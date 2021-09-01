@@ -8,6 +8,7 @@ numpy = "*"
 requests = "*"
 twine = "*"
 modin = {extras = ["ray"], version = "*"}
+torch = "*"
 
 [dev-packages]
 "flake8" = "*"

@@ -12,7 +12,7 @@ import pandas._typing as pdtypes
 import pytest
 # from numpy.random import default_rng
 from sklearn.datasets import make_classification, make_regression
-from typing import Optional
+from typing import Optional, Union
 
 def generate_metadata_dataset(problem_type:str, **kwargs) -> pdtypes.FrameOrSeries:
     """Generates a sample metadata dataset.
@@ -38,7 +38,22 @@ def generate_metadata_dataset(problem_type:str, **kwargs) -> pdtypes.FrameOrSeri
         classification: Makes a dataset with numeric features
         and n classes.
 
-        regression
+        regression: Make a regression dataset
+
+    Examples
+    --------
+    >>> metadata_dataset = generate_metadata_dataset('classification',random_state=0)
+    >>> metadata_dataset.describe().T[['mean', 'std']].round(2).head(3)
+       mean   std
+    0 -0.20  0.92
+    1 -0.07  1.07
+    2 -0.02  0.98
+    >>> metadata_dataset = generate_metadata_dataset('regression',random_state=0)
+    >>> metadata_dataset.describe().T[['mean', 'std']].round(2).head(3)
+       mean   std
+    0  0.04  0.96
+    1 -0.24  0.91
+    2  0.07  0.96
     """
     if problem_type == 'classification':
         features, target = make_classification(**kwargs)
@@ -81,4 +96,26 @@ test_cases = [
 def test_generate_metadata_dataset(problem_set, kwargs, expected_data):
     dataset = generate_metadata_dataset(problem_set, **kwargs)
     actual_values = dataset.agg({'0':'mean','18':'sum'}).round(3).values
-    
+
+
+def generate_random_embeddings(
+    embedding_type: str,
+    n: Union[pdtypes.FrameOrSeries, int],
+    d: Optional[int] = 2,
+    **kwargs
+) -> pdtypes.FrameOrSeries:
+    """Generate shaped pseudo-random embeddings.
+
+    This creates a fresh set of embeddings for a given dataset, or
+    of a certain size. These embeddings take a specific shape
+    dependent on the embedding type desired.
+
+    * Uniform: Uniform embedding will uniformly randomly disperse
+      the embedded points within a `d` dimensional unit hypercube.
+      This algorithm accepts `d` as a keyword argument
+    * Clusters: Cluster embedding will randomly disperse `k`
+      centroids within a `d` dimensional unit hypercube. All instances
+      of metadata will then be gaussian distributed around those
+      centroids.
+
+    """
