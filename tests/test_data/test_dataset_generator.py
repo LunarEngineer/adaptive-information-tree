@@ -7,10 +7,11 @@ These datasets represent some notional metadata (accurate or not)
 concerning some samples of data.
 """
 import modin.pandas as pd
+import numpy as np
 import pandas._typing as pdtypes
 import pytest
 # from numpy.random import default_rng
-from sklearn.datasets import make_classification
+from sklearn.datasets import make_classification, make_regression
 from typing import Optional
 
 def generate_metadata_dataset(problem_type:str, **kwargs) -> pdtypes.FrameOrSeries:
@@ -34,11 +35,18 @@ def generate_metadata_dataset(problem_type:str, **kwargs) -> pdtypes.FrameOrSeri
         This returns a pandas dataframe with metadata dependent on
         the implementation.
 
-        binary_classification: Makes a dataset with numeric features
-        and a binary target.
+        classification: Makes a dataset with numeric features
+        and n classes.
+
+        regression
     """
-    if problem_type == 'binary_classification':
+    if problem_type == 'classification':
         features, target = make_classification(**kwargs)
+        df = pd.DataFrame(features)
+        df.columns = [str(x) for x in df.columns]
+        return df.assign(y=target)
+    elif problem_type == 'regression':
+        features, target = make_regression(**kwargs)
         df = pd.DataFrame(features)
         df.columns = [str(x) for x in df.columns]
         return df.assign(y=target)
@@ -56,16 +64,21 @@ def generate_metadata_dataset(problem_type:str, **kwargs) -> pdtypes.FrameOrSeri
 
 test_cases = [
     (
-        'binary_classification',
+        'classification',
         dict(
             n_samples=100, n_features=20, n_informative=2, n_redundant=2, n_repeated=0, n_classes=2, n_clusters_per_class=2, weights=None, flip_y=0.01, class_sep=1.0, hypercube=True, shift=0.0, scale=1.0, shuffle=True, random_state=0
         ),
         np.array([-0.201, 21.985])
+    ),
+    (
+        'regression',
+        dict(n_samples=100, n_features=100, n_informative=10, n_targets=1, bias=0.0, effective_rank=None, tail_strength=0.5, noise=0.0, shuffle=True, coef=False, random_state=None),
+        np.array([-.002, -6.57])
     )
 ]
 
 @pytest.mark.parametrize('problem_set, kwargs, expected_data', test_cases)
-def test_generate_metadata_dataset(problem_set, kwargs, expected_values):
-    dataset = generate_metadata_dataset(problem_type, **kwargs)
-    actual_values = df.agg({'0':'mean','18':'sum'}).round(3).values
+def test_generate_metadata_dataset(problem_set, kwargs, expected_data):
+    dataset = generate_metadata_dataset(problem_set, **kwargs)
+    actual_values = dataset.agg({'0':'mean','18':'sum'}).round(3).values
     
