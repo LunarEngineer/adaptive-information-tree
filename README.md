@@ -2,9 +2,9 @@
 
 KD Trees are an extremely efficient method of producing nearest neighbor queries in an orthogonal space.
 
-Embedding vectors are an effective way of mapping *identities* into a space. There is no constaint on the orthogonality of an embedding vector, and we can wave our hands and say 'sure, it can be orthogonal, no biggie'.
+Embedding vectors are an effective way of mapping *identities* into a space. There is no constraint on the orthogonality of an embedding vector, and we can wave our hands and say 'sure, it can be orthogonal, no biggie'.
 
-If we take a dataset of *educational instructional content* and produce a set of embedding vectors over the set of this content we can arbitrarily map these elements into our now *n-dimensional orthogonal space*.
+If we take a dataset of *educational instructional content* (training samples) and produce a correlated set of embedding vectors over the set of this content we can arbitrarily map these elements into our now *n-dimensional orthogonal space*.
 
 Now, we produce a KD-Tree from the elements of this space and provide subordinate learners with this KD-Tree in order for them to resolve queries of nearest neighbors. (In plain and simple English, give me the most similar content to this *thing*.)
 
